@@ -1,0 +1,7 @@
+﻿  Simulator.cpp
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(40,25): warning C4018: '<': signed/unsigned mismatch
+  User.cpp
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\User.cpp(23,20): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(28): warning C4715: 'Simulator::Mode_Select': not all control paths return a value
+  Symulacja_Cyfrowa.vcxproj -> C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Debug\Symulacja_Cyfrowa.exe
