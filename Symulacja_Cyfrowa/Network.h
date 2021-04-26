@@ -5,6 +5,8 @@
 #include <vector>
 #include <queue>
 #include "User.h"
+#include "BTS.h"
+#include <random>
 
 class Network
 {
@@ -24,7 +26,10 @@ public:
 	std::vector<int> Map_Bts_Blocks(int Blocs_Per_User = 1);
 	
 	void Map_Blocks_To_User();
-	void Send_Bts_Block();
+	void Send_Bts_Block(User* user);
+
+	float Draw_Bitrate_Change_Time(float Tau);
+	
 	/// GETTERS ///
 	
 	std::queue<User*> Get_User_list();

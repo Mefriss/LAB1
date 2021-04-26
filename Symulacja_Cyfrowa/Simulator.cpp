@@ -89,7 +89,7 @@ void Simulator::Operation(Network* network, bool Mode, int time)
 	}
 	Remove_All_Users(network);
 }
-
+///  Xddd???? ////
 void Simulator::M1_Operation(Network* network, bool Mode,bool Toggle_Logs, int time)
 {
 	simulator_clock_ = 0;
@@ -144,7 +144,7 @@ void Simulator::M1_Operation(Network* network, bool Mode,bool Toggle_Logs, int t
 				spdlog::info("Resource block has been assigned to user \n \n");
 				network->Set_Chanel_Busy_Flag(true);
 				//network->Grant_Blocks_To_User();
-				network->Send_Bts_Block();
+				network->Send_Bts_Block(network->Get_User_list().front());
 				network->Map_Blocks_To_User();
 				network->Set_Time_Until_Bts_Assigns_Block(1);
 				No_Event = false;

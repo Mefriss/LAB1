@@ -112,10 +112,13 @@ void BTS::Send_Data_To_User(int Bit_Rate)
 	
 }
 
-void BTS::Send_Block_To_User(int Resource_Block_Count, std::vector<int>User_Bit_Rate_Vector)
+void BTS::Send_Block_To_User(int Resource_Block_Count, std::vector<int>User_Bit_Rate_Vector,User* user)
 {
 	if(!((rand() % 10 + 1) / 10))
-		Resource_Block_Map_.push_back(User_Bit_Rate_Vector.front());
+		if(user -> Get_Data_To_Be_Fetched()>Resource_Block_Map_.front())
+			Resource_Block_Map_.push_back(User_Bit_Rate_Vector.front());
+		else
+			Resource_Block_Map_.push_back(user->Get_Data_To_Be_Fetched());
 	else
 		spdlog::error("Transimission Error");
 	Wipe_Resource_Block_Map();

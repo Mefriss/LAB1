@@ -3,7 +3,7 @@
 
 #pragma once
 #include <vector>
-#include "BTS.h"
+//#include "BTS.h"
 #include <iostream>
 
 class User
@@ -17,7 +17,7 @@ public:
 	
 	void Save_Blocks(std::vector<int>Recived_Blocks);
 	int Draw_Data_To_Be_Fetched();
-	
+	//float Draw_Bit_Rate_Table();
 
 	// GETTERS //
 	

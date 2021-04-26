@@ -20,11 +20,12 @@ public:
 	bool Draw_Error();
 	void Wipe_Resource_Block_Map();
 	void Send_Data_To_User(int Bit_Rate);
-	void Send_Block_To_User(int Resource_Block_Count, std::vector<int>User_Bit_Rate_Vector);
+	void Send_Block_To_User(int Resource_Block_Count, std::vector<int>User_Bit_Rate_Vector,User* user);
 	//void Map_User(User* user);
 	std::vector<int> Set_Resource_Block_To_User(int Packets_Per_User);
 
 	std::vector<int>Get_Resource_Block_Map() { return Resource_Block_Map_; }
+
 	
 	BTS(int Resource_Block_Count);
 

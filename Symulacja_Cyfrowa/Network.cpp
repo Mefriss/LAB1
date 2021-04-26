@@ -69,10 +69,15 @@ void Network::Map_Blocks_To_User()
 	User_List_.front()->Set_User_Data(Downloaded_Data);
 }
 
-void Network::Send_Bts_Block()
+void Network::Send_Bts_Block(User* user)
 {
-	Bts_->Send_Block_To_User(15,User_List_.front()->Get_Bit_Rate_Vector());
+	Bts_->Send_Block_To_User(15,User_List_.front()->Get_Bit_Rate_Vector(),user);
 }
+
+//float Network::Draw_Bitrate_Change_Time(float Tau)
+//{
+//	///return rand()%0.1 
+//}
 
 std::queue<User*> Network::Get_User_list()
 {
