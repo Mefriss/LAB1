@@ -18,7 +18,7 @@ public:
 	void Save_Blocks(std::vector<int>Recived_Blocks);
 	int Draw_Data_To_Be_Fetched();
 	//float Draw_Bit_Rate_Table();
-
+	void Draw_New_Bit_Rate();
 	// GETTERS //
 	
 	int Get_User_ID();

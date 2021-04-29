@@ -18,6 +18,7 @@ public:
 	bool Key_Down();
 	void Display_Throughput();
 	void Remove_All_Users(Network* network);
+	void Step_In(int Mode);
 private:
 	size_t simulator_clock_ = 0;
 	bool Toggle_Logs_;

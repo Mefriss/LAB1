@@ -24,21 +24,24 @@ public:
 	void Generate_Packet_And_Add_New_User(int Id);
 	void Pop_Arival_Time();
 	std::vector<int> Map_Bts_Blocks(int Blocs_Per_User = 1);
-	
+	void Draw_New_Bit_Rate_For_The_First_User(User* user);
 	void Map_Blocks_To_User();
 	void Send_Bts_Block(User* user);
 
 	float Draw_Bitrate_Change_Time(float Tau);
+
+	void Push_User_To_The_End_Of_The_Queue();
 	
 	/// GETTERS ///
 	
 	std::queue<User*> Get_User_list();
 	int Get_User_Arival_Time() { return User_Arival_Time_; }
-	//int Get_First_User_Arival_Time() { return User_Arival_Times_.front(); }
+	int Get_First_User_Arival_Time() { return User_Arival_Times_.front(); }
 	int Get_Block_Assingment_Time() { return Block_Assignment_Time_; }
 	int Get_Time_Until_Bts_Assigns_Block() { return Time_Until_Bts_Assigns_Block_; }
 	int Get_Time_Until_New_User_Arives() { return Time_Until_New_User_Arives_; }
 	bool Get_Channel_Busy_Flag() { return Channel_Busy_; }
+	int Get_First_User_ID();
 	
 	/// SETTERS ///
 	
@@ -52,6 +55,7 @@ public:
 
 private:
 	std::queue<User*> User_List_;
+	std::queue<int> User_Arival_Times_;
 	//std::queue<int> User_Arival_Times_;
 	BTS* Bts_;
 	//int User_Creation_Time

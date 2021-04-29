@@ -9,7 +9,7 @@
 User::User(int User_ID)
 {
 	//Bit_Rate_.reserve(1);
-	for(int i = 0; i < 99; i++)
+	//for(int i = 0; i < 99; i++)
 	Bit_Rate_.push_back(rand() % 800 + 21); //Przep³ywnoœæ - r,k – zmienna losowa o rozk³adzie jednostajnym w przedziale <20, 800> kbit/s
 	User_ID_ = User_ID;	
 }
@@ -33,6 +33,11 @@ void User::Save_Blocks(std::vector<int>Recived_blocks)
 int User::Draw_Data_To_Be_Fetched()
 {
 	return (rand() % 10 + 1) * 250;
+}
+
+void User::Draw_New_Bit_Rate()
+{
+	Bit_Rate_.push_back(rand() % 800 + 21);
 }
 
 void User::Set_User_Data(int Data_Fetched)

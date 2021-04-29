@@ -102,7 +102,7 @@ bool BTS::Draw_Error()
 	else
 	{
 		std::cout << "Transmisja odby³a siê z b³êdem" << std::endl;
-		spdlog::error("Transimission Error");
+		spdlog::debug("Transimission Error");
 	}
 	return Error_Var;
 }
@@ -120,7 +120,7 @@ void BTS::Send_Block_To_User(int Resource_Block_Count, std::vector<int>User_Bit_
 		else
 			Resource_Block_Map_.push_back(user->Get_Data_To_Be_Fetched());
 	else
-		spdlog::error("Transimission Error");
+		spdlog::debug("Transimission Error");
 	Wipe_Resource_Block_Map();
 	User_Bit_Rate_Vector.pop_back();
 }

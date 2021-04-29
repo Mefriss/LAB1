@@ -15,13 +15,18 @@ void Network::Create_New_Bts()
 int Network::Draw_User_Arival_Time(int Time_Elapsed)
 {
 	User_Arival_Time_ = Time_Elapsed + rand() % 10 + 1;
-	//User_Arival_Times_.push(User_Arival_Time_);
+	User_Arival_Times_.push(User_Arival_Time_);
 	return User_Arival_Time_;
 }
 
 void Network::Add_New_User(User* New_User)
 {
 	User_List_.push(New_User);
+}
+
+int Network::Get_First_User_ID()
+{
+	return User_List_.front()->Get_User_ID();
 }
 
 void Network::Set_BTS_Data()
@@ -63,6 +68,11 @@ std::vector<int> Network::Map_Bts_Blocks(int Blocs_Per_User)
 	
 }
 
+void Network::Draw_New_Bit_Rate_For_The_First_User(User* user)
+{
+	user->Draw_New_Bit_Rate();
+}
+
 void Network::Map_Blocks_To_User()
 {
 	int Downloaded_Data = Bts_->Get_Resource_Block_Map().front();
@@ -78,6 +88,12 @@ void Network::Send_Bts_Block(User* user)
 //{
 //	///return rand()%0.1 
 //}
+
+void Network::Push_User_To_The_End_Of_The_Queue()
+{
+	User_List_.push(User_List_.front());
+	User_List_.pop();
+}
 
 std::queue<User*> Network::Get_User_list()
 {

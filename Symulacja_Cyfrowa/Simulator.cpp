@@ -98,38 +98,39 @@ void Simulator::M1_Operation(Network* network, bool Mode,bool Toggle_Logs, int t
 	int Id = -1;
 	network->Set_Chanel_Busy_Flag(false);
 	network->Draw_User_Arival_Time(simulator_clock_);//losujemy czas przyjœcia pierwszego usera
-
+	bool Draw_Forever = false;
 	while (simulator_clock_ < time)
 	{
 		bool No_Event = false;
-		if (Mode)
-		{
-			char key;
-			std::cout << "Naciœnij przycisk aby kontynuowaæ" << std::endl;
-			key = getchar();
-		}
+		Step_In(Mode);
 		std::cout << "Czas który up³yn¹³ od pocz¹tku symulacji: " << simulator_clock_ << std::endl;
 
 		while (No_Event == false)
 		{
 			No_Event = true;
 			if (network->Get_Time_Until_New_User_Arives() == 0) /// czy w tej chwili czasowej pojawi siê u¿ytkownik?
+			//if (network->Get_First_User_Arival_Time() == 0) /// czy w tej chwili czasowej pojawi siê u¿ytkownik?
 			{
-				
-				++Id;
-				std::cout << "Nowy u¿ytkownik! " << std::endl;
-				if (Toggle_Logs_)
-				spdlog::info("New user has been created \n \n");
-				network->Set_Time_Until_New_User_Arives(network->Draw_User_Arival_Time(0));
-				network->Generate_Packet_And_Add_New_User(Id);
-				//network->Set_User_Data_To_Be_Fetched();
-				No_Event = false;
+				if(simulator_clock_ < 50 || Draw_Forever == true)
+				{
+					++Id;
+					
+					//if (Toggle_Logs_)
+						spdlog::debug("New user has been created \n \n");
+					//network->Set_Time_Until_New_User_Arives(network->Draw_User_Arival_Time(0)); // Uncomment for random time
+					network->Set_Time_Until_New_User_Arives(2);
+					network->Generate_Packet_And_Add_New_User(Id);
+					std::cout << "Nowy u¿ytkownik! ID: " << network->Get_First_User_ID() << std::endl;
+					//network->Set_User_Data_To_Be_Fetched();
+					No_Event = false;
+				}
+
 			}
 			if (!network->Get_User_list().empty() && network->Get_User_list().front()->Get_Data_To_Be_Fetched() <= 0)// koniec transmisji
 			{
-				std::cout << "przydzielono wszystkie bloki u¿ytkownikowi" << std::endl;
-				if (Toggle_Logs_)
-				spdlog::info("All Resource blocks has been assigned to user \n \n");
+				std::cout << "przydzielono wszystkie bloki u¿ytkownikowi o ID: " <<network->Get_First_User_ID() <<std::endl;
+				//if (Toggle_Logs_)
+				spdlog::debug("All Resource blocks has been assigned to user \n \n");
 				network->Set_Chanel_Busy_Flag(false);
 				network->Remove_User();
 				//spdlog::info("User removed from queue \n \n");
@@ -141,15 +142,20 @@ void Simulator::M1_Operation(Network* network, bool Mode,bool Toggle_Logs, int t
 			{
 				std::cout << "przydzielam bloki" << std::endl;
 				if (Toggle_Logs_)
-				spdlog::info("Resource block has been assigned to user \n \n");
+				spdlog::debug("Resource block has been assigned to user \n \n");
 				network->Set_Chanel_Busy_Flag(true);
 				//network->Grant_Blocks_To_User();
 				network->Send_Bts_Block(network->Get_User_list().front());
 				network->Map_Blocks_To_User();
+				network->Draw_New_Bit_Rate_For_The_First_User(network->Get_User_list().front());
 				network->Set_Time_Until_Bts_Assigns_Block(1);
+				//if (network->Get_Time_Until_Bts_Assigns_Block() == 0)
+				network->Push_User_To_The_End_Of_The_Queue();
 				No_Event = false;
 				std::cout << "Czas który up³yn¹³ od pocz¹tku symulacji: " << simulator_clock_ << std::endl;
-				simulator_clock_++;
+				Step_In(Mode);
+				++simulator_clock_;
+				
 			}
 			//if (network->Get_User_list().front()->Get_Data_To_Be_Fetched() == 0 && !network->Get_User_list().empty() && network->Get_Channel_Busy_Flag() == true) // czy u¿ytkownik zassa³ wszystkie dane?
 
@@ -175,22 +181,33 @@ void Simulator::Remove_All_Users(Network* network)
 
 }
 
+void Simulator::Step_In(int Mode)
+{
+	if (Mode)
+	{
+		char key;
+		std::cout << "Naciœnij przycisk aby kontynuowaæ" << std::endl;
+		key = getchar();
+	}
+}
+
 void Simulator::Main()
 {
 	setlocale(LC_CTYPE, "Polish");
 	std::cout << "Czy chcesz wyœwietlaæ logi? " << std::endl << "0 - Nie     1 - Tak" << std::endl << "Twój Wybór: ";
 	std::cin >> Toggle_Logs_;
-	
+	if (Toggle_Logs_)
+	spdlog::set_level(spdlog::level::debug);
 	Network* network = new Network();
-	if(Toggle_Logs_)
-	spdlog::info( "Network Has been created \n");
+	//if(Toggle_Logs_)
+	spdlog::debug( "Network Has been created \n");
 
 	network->Create_New_Bts();
-	if (Toggle_Logs_)
-	spdlog::info("Base Station has been created \n");
+	//if (Toggle_Logs_)
+	spdlog::debug("Base Station has been created \n");
 	network->Set_BTS_Data();
-	if (Toggle_Logs_)
-	spdlog::info("Drawing Data \n");
+	//if (Toggle_Logs_)
+	spdlog::debug("Drawing Data \n");
 	int Mode_Selection;
 	bool Current_Mode;
 
