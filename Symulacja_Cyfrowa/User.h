@@ -20,7 +20,6 @@ public:
 	//float Draw_Bit_Rate_Table();
 	void Draw_New_Bit_Rate();
 	// GETTERS //
-	
 	int Get_User_ID();
 	int Get_Data_To_Be_Fetched() { return User_Data_; }
 	std::vector<int> Get_Bit_Rate_Vector() { return Bit_Rate_; }

@@ -42,6 +42,7 @@ public:
 	int Get_Time_Until_New_User_Arives() { return Time_Until_New_User_Arives_; }
 	bool Get_Channel_Busy_Flag() { return Channel_Busy_; }
 	int Get_First_User_ID();
+	int Get_Data_From_User(User* user);
 	
 	/// SETTERS ///
 	

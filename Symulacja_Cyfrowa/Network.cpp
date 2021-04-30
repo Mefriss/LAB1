@@ -29,6 +29,11 @@ int Network::Get_First_User_ID()
 	return User_List_.front()->Get_User_ID();
 }
 
+int Network::Get_Data_From_User(User* user)
+{
+	return  user ->Get_User_Data();
+}
+
 void Network::Set_BTS_Data()
 {
 	Bts_->Set_Data();

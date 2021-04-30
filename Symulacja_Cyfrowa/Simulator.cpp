@@ -147,6 +147,7 @@ void Simulator::M1_Operation(Network* network, bool Mode,bool Toggle_Logs, int t
 				//network->Grant_Blocks_To_User();
 				network->Send_Bts_Block(network->Get_User_list().front());
 				network->Map_Blocks_To_User();
+				spdlog::debug("Remaining Data: {}",network->Get_Data_From_User(network->Get_User_list().front()));
 				network->Draw_New_Bit_Rate_For_The_First_User(network->Get_User_list().front());
 				network->Set_Time_Until_Bts_Assigns_Block(1);
 				//if (network->Get_Time_Until_Bts_Assigns_Block() == 0)

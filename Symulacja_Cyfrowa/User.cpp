@@ -37,7 +37,9 @@ int User::Draw_Data_To_Be_Fetched()
 
 void User::Draw_New_Bit_Rate()
 {
+	Bit_Rate_.pop_back();
 	Bit_Rate_.push_back(rand() % 800 + 21);
+	
 }
 
 void User::Set_User_Data(int Data_Fetched)
