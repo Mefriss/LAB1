@@ -22,8 +22,8 @@ void BTS::Set_Data()
 	for (int i = 0; i < 15;i++)
 	{
 		//Resource_Block_Map_.push_back(rand() % 800 + 21);
-		Resource_Block_Map_.push_back((rand() % 10 + 1)*250);
-		std::cout << Resource_Block_Map_[i]<<" ";
+		Resource_Block_Cap_.push_back((rand() % 10 + 1)*250);
+		std::cout << Resource_Block_Cap_[i]<<" ";
 	}
 	std::cout << std::endl;
 	std::cout << std::endl;
@@ -114,19 +114,30 @@ void BTS::Send_Data_To_User(int Bit_Rate)
 
 void BTS::Send_Block_To_User(int Resource_Block_Count, std::vector<int>User_Bit_Rate_Vector,User* user)
 {
-	if(!((rand() % 10 + 1) / 10))
-		if(user -> Get_Data_To_Be_Fetched()>Resource_Block_Map_.front())
-		{
-			Resource_Block_Map_.push_back(User_Bit_Rate_Vector.front());
-			spdlog::debug("Sent: {}", Resource_Block_Map_.front());
-		}
-			
-		else
-			Resource_Block_Map_.push_back(user->Get_Data_To_Be_Fetched());
+	if (!((rand() % 10 + 1) / 10))
+	{
+		Transmission_Succes_Flag_.push_back(true);
+		user->Set_User_Data(1);
+	}
+		
 	else
+	{
+		Transmission_Succes_Flag_.push_back(false);
+		user->Set_User_Data(0);
 		spdlog::debug("Transimission Error");
+	}
+		
+		
 	Wipe_Resource_Block_Map();
 	//User_Bit_Rate_Vector.pop_back();
+}
+
+void BTS::init()
+{
+	while (Transmission_Succes_Flag_.size() < Resource_Block_Count_)
+	{
+		Transmission_Succes_Flag_.push_back(true);
+	}
 }
 
 

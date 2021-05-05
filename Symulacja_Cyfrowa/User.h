@@ -12,13 +12,14 @@ public:
 
 	//std::vector<int>Get_Bit_Rate();
 
-	User(int User_ID);
+	User(int User_ID, int Resource_Block_Count);
 	~User();
 	
 	void Save_Blocks(std::vector<int>Recived_Blocks);
 	int Draw_Data_To_Be_Fetched();
 	//float Draw_Bit_Rate_Table();
-	void Draw_New_Bit_Rate();
+	//void Draw_Bit_Rate();
+	int Draw_New_Bit_Rate();
 	// GETTERS //
 	int Get_User_ID();
 	int Get_Data_To_Be_Fetched() { return User_Data_; }
@@ -28,7 +29,7 @@ public:
 	void Set_User_Data(int Data_Fetched);
 	void Set_Bit_Rate();
 	void Set_Data_To_Be_Fetched();
-
+	void Update_Bit_Rate();
 
 private:
 	int User_ID_;

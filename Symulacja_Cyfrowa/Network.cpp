@@ -10,6 +10,7 @@
 void Network::Create_New_Bts()
 {
 	Bts_ = new BTS(15);// k = 15
+	Bts_->init();
 }
 
 int Network::Draw_User_Arival_Time(int Time_Elapsed)
@@ -54,6 +55,11 @@ void Network::Set_Time_Until_New_User_Arives(int Time_Until_New_User_Arives)
 void Network::Set_Time_Until_Bts_Assigns_Block(int Time_Until_Bts_Assigns_Block)
 {
 	Time_Until_Bts_Assigns_Block_ = Time_Until_Bts_Assigns_Block;
+}
+
+void Network::Set_Bit_Rate_Change_Time(float Time_Until_New_Bit_Rate_Is_Being_Drawn)
+{
+	Time_Until_New_Bit_Rate_Is_Being_Drawn_ = Time_Until_New_Bit_Rate_Is_Being_Drawn;
 }
 
 void Network::Set_Chanel_Busy_Flag(bool Channel_Busy)
@@ -131,8 +137,9 @@ void Network::Grant_Blocks_To_User()
 void Network::Generate_Packet_And_Add_New_User(int Id)
 {
 	
-	User* New_User = new User(Id);
-	New_User->Set_Data_To_Be_Fetched();
+	User* New_User = new User(Id, Bts_->Get_Resource_Block_Count());
+	//spdlog::debug("New user with id: {} \n", net)
+	//New_User->Set_Data_To_Be_Fetched();
 	User_List_.push(New_User);
 }
 
@@ -140,4 +147,8 @@ void Network::Pop_Arival_Time()
 {
 	//User_Arival_Times_.pop();
 }
-
+float Network::Draw_Bit_Rate_Change_Time(float Tau)
+{
+	float time = rand() % 10 + 1;
+	return time;
+}

@@ -1,14 +1,8 @@
-﻿  BTS.cpp
-  Main_Class.cpp
-  Network.cpp
-  Simulator.cpp
+﻿  Simulator.cpp
 C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(37,87): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(63,70): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(70,85): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(85,85): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(100,49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  User.cpp
-  Generating Code...
 C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(28): warning C4715: 'Simulator::Mode_Select': not all control paths return a value
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.cpp(92): warning C4715: 'BTS::Set_Resource_Block_To_User': not all control paths return a value
   Symulacja_Cyfrowa.vcxproj -> C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\x64\Debug\Symulacja_Cyfrowa.exe
