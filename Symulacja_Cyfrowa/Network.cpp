@@ -73,12 +73,6 @@ void Network::Set_User_Data_To_Be_Fetched()
 }
 
 
-std::vector<int> Network::Map_Bts_Blocks(int Blocs_Per_User)
-{
-	return Bts_->Set_Resource_Block_To_User(Blocs_Per_User);
-	
-}
-
 void Network::Draw_New_Bit_Rate_For_The_First_User(User* user)
 {
 	user->Draw_New_Bit_Rate();
@@ -87,13 +81,15 @@ void Network::Draw_New_Bit_Rate_For_The_First_User(User* user)
 void Network::Map_Blocks_To_User()
 {
 	int Downloaded_Data = Bts_->Get_Resource_Block_Map().front();
-	User_List_.front()->Set_User_Data(Downloaded_Data);
+	//User_List_.front()->Set_User_Data(Downloaded_Data);
 }
 
 void Network::Send_Bts_Block(User* user)
 {
 	Bts_->Send_Block_To_User(15,User_List_.front()->Get_Bit_Rate_Vector(),user);
 }
+
+
 
 //float Network::Draw_Bitrate_Change_Time(float Tau)
 //{
@@ -104,6 +100,43 @@ void Network::Push_User_To_The_End_Of_The_Queue()
 {
 	User_List_.push(User_List_.front());
 	User_List_.pop();
+}
+
+void Network::Free_Up_The_Resource_Blocks(User* user)
+{
+	for (int i = Bts_->Get_Resource_Block_Count(); i>0; --i)
+	{
+		if(Bts_->Get_Resource_Blocks_()[i].user != nullptr && Bts_->Get_Resource_Blocks_()[i].user->Get_User_ID() == user->Get_User_ID())
+		{
+			Bts_->Get_Resource_Blocks_()[i].user = nullptr;
+			Bts_->Get_Resource_Blocks_()[i].Bit_Rate_ = 0;
+			Bts_->Get_Resource_Blocks_()[i].Error_Flag_ = false;
+		}
+		
+	}
+}
+
+void Network::Assign_User_To_Resource_Block(User* User)
+{
+
+	int Iterator = Bts_->Get_Resource_Block_Count();
+	while(Bts_->Get_Resource_Blocks_()[Iterator].user != nullptr && Iterator >= 0)
+	{
+		--Iterator;
+	}
+	if (Iterator> 0)
+	Bts_->Get_Resource_Blocks_()[Iterator].user = User;
+	Bts_->Get_Resource_Blocks_()[Iterator].Error_Flag_ = Bts_->Draw_Error();
+	Bts_->Get_Resource_Blocks_()[Iterator].Bit_Rate_ = User->Get_Bit_Rate_Vector().back();
+	if (Bts_->Get_Resource_Blocks_()[Iterator].Error_Flag_ == true)
+		Bts_->Get_Resource_Blocks_()[Iterator].Bit_Rate_ = 0;
+	User->Get_Bit_Rate_Vector().pop_back();
+	
+}
+
+void Network::Bts_INIT()
+{
+	Bts_->init();
 }
 
 std::queue<User*> Network::Get_User_list()
@@ -129,10 +162,6 @@ void Network::Remove_User()
 	User_List_.pop();
 }
 
-void Network::Grant_Blocks_To_User()
-{
-	User_List_.front()->Save_Blocks(Map_Bts_Blocks());
-}
 
 void Network::Generate_Packet_And_Add_New_User(int Id)
 {

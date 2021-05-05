@@ -22,10 +22,6 @@ User::~User()
 
 void User::Save_Blocks(std::vector<int>Recived_blocks)
 {
-	for (int i = 0; i < Recived_blocks.size(); i++)
-		{
-			Recived_Blocks_.push_back(Recived_blocks[i]);
-		}
 
 
 
@@ -41,6 +37,9 @@ int User::Draw_New_Bit_Rate()
 }
 
 
+
+
+
 //void User::Draw_New_Bit_Rate()
 //{
 //	Bit_Rate_.pop_back();
@@ -48,7 +47,7 @@ int User::Draw_New_Bit_Rate()
 //	
 //}
 
-void User::Set_User_Data(int Data_Fetched)
+void User::Subtract_User_Data(int Data_Fetched)
 {
 	User_Data_ -= Data_Fetched;
 }

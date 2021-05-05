@@ -26,69 +26,8 @@ bool Simulator::Mode_Select(int Mode_Selection)
 	Mode_Select(Retry_Mode);
 	
 }
-void Simulator::Operation(Network* network, bool Mode, int time)
-{
-	int Simulation_Time = time;
-	simulator_clock_ = 0;
-	std::cout << "Rozpoczêto symulacjê z³¹ metotd¹ \n";
-	spdlog::info("Simulation Started \n");
-	//int First_User_Arival_time = network->Draw_User_Arival_Time();
-	int User_Arival_time = network->Draw_User_Arival_Time(0);
-	int Block_Assignment_Time = network->Calculate_Block_Assingment_Time(simulator_clock_);
-	spdlog::info("Arival time of the first user has been drawn \n");
-	int ID = 0;
-	spdlog::info("ID of the first user has been drawn \n");
-	while(simulator_clock_ < Simulation_Time){
 
-		bool no_event = false;
-		
-		if (Mode)
-		{
-			char key;
-			std::cout << "Naciœnij przycisk aby kontynuowaæ" << std::endl;
-			key = getchar();
-		}
-		
-		std::cout << "Czas który up³yn¹³ od pocz¹tku symulacji: " << simulator_clock_ << std::endl;
-		
-		if (User_Arival_time == simulator_clock_)
-		{
-			if(!network->Get_User_list().empty())
-				network->Remove_User();
-			User* New_User = new User(ID,network->Get_Resource_Block_Count_From_Bts() );
-			spdlog::info("New user has been created \n");
-			std::cout << std::endl<< "Pojawienie siê u¿ytkownika " << New_User->Get_User_ID() << std::endl;
-			network->Add_New_User(New_User);
-			++ID;
-			User_Arival_time = network->Draw_User_Arival_Time(simulator_clock_);
-			
-			//network->Remove_User();
-		}
-		
-		if(Block_Assignment_Time == simulator_clock_ && network->Get_User_list().empty())//nie ma komu przydzieliæ zasobów wiêc "Przesuwamy" czas przydzielenia zasobów
-		{
-			Block_Assignment_Time = network->Calculate_Block_Assingment_Time(simulator_clock_);
-		}
-		
-		if (Block_Assignment_Time == simulator_clock_ && !network->Get_User_list().empty())
-		//if (!network->Get_User_list().empty())
-		{
-			
-			
-			if (!network->Check_Bts_Blocks_Depleted())
-			{
-				std::cout << "Przydzielono zasoby u¿ytkownikowi o ID: " <<network->Get_User_list().front()->Get_User_ID()<< std::endl;
-				network->Grant_Blocks_To_User();
-				network->Set_BTS_Error(ID);
-				
-			}
-			Block_Assignment_Time = network->Calculate_Block_Assingment_Time(simulator_clock_);
-		}
-		++simulator_clock_;
 
-	}
-	Remove_All_Users(network);
-}
 ///  Xddd???? ////
 void Simulator::M1_Operation(Network* network, bool Mode,bool Toggle_Logs, int time)
 {
@@ -100,6 +39,7 @@ void Simulator::M1_Operation(Network* network, bool Mode,bool Toggle_Logs, int t
 	network->Draw_User_Arival_Time(simulator_clock_);//losujemy czas przyjœcia pierwszego usera
 	network->Set_Bit_Rate_Change_Time(network->Draw_Bit_Rate_Change_Time(1));
 	bool Draw_Forever = true;
+	network->Bts_INIT();
 	
 	while (simulator_clock_ < time)
 	{
@@ -148,12 +88,16 @@ void Simulator::M1_Operation(Network* network, bool Mode,bool Toggle_Logs, int t
 				//if (Toggle_Logs_)
 				spdlog::debug("All Resource blocks has been assigned to user \n \n");
 				network->Set_Chanel_Busy_Flag(false);
+				network->Free_Up_The_Resource_Blocks(network->Get_User_list().front());
 				network->Remove_User();
 				//spdlog::info("User removed from queue \n \n");
 				No_Event = false;
 				
 			}
-			//if(!network->Get_User_list().empty() && network->Get_Channel_Busy_Flag()== false)//start transmisji
+			//if(!network->Get_User_list().empty() && network->Get_Channel_Busy_Flag()== false)
+
+			//start transmisji
+
 			if (!network->Get_User_list().empty() && network->Get_Time_Until_Bts_Assigns_Block() == 0)
 			{
 				spdlog::debug("Remaining Data: {}", network->Get_User_list().front()->Get_User_Data());
@@ -162,10 +106,9 @@ void Simulator::M1_Operation(Network* network, bool Mode,bool Toggle_Logs, int t
 				spdlog::debug("Resource block has been assigned to user \n \n");
 				network->Set_Chanel_Busy_Flag(true);
 				//network->Grant_Blocks_To_User();
-				network->Send_Bts_Block(network->Get_User_list().front());
+				network->Assign_User_To_Resource_Block(network->Get_User_list().front());
+				network->Get_User_list().front()->Subtract_User_Data(1);
 				//network->Map_Blocks_To_User();
-				
-				
 				//network->Draw_New_Bit_Rate_For_The_First_User(network->Get_User_list().front());
 				//if (network->Get_Time_Until_Bts_Assigns_Block() == 0)
 				network->Push_User_To_The_End_Of_The_Queue();
