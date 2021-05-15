@@ -13,25 +13,27 @@ class Network
 public:
 
 	void Create_New_Bts();
-	int Draw_User_Arival_Time();
 	int Draw_User_Arival_Time(int Time_Elapsed);
 	void Add_New_User(User* New_User);
 
 	bool Check_Bts_Blocks_Depleted();
 	int Calculate_Block_Assingment_Time(int Time_Elapsed, int Assingmnet_Time_Step = 1);
 	void Remove_User();
-	void Generate_Packet_And_Add_New_User(int Id);
+	void Generate_Packet_And_Add_New_User(int Id,bool rng);
 	void Pop_Arival_Time();
 	std::vector<int> Map_Bts_Blocks(int Blocs_Per_User = 1);
-	void Draw_New_Bit_Rate_For_The_First_User(User* user);
+	void Draw_New_Bit_Rate_For_The_First_User(User* user, bool rng);
 	void Map_Blocks_To_User();
 	void Send_Bts_Block(User* user);
 	void Send_Resource_Block_To_User(User* user);
-	float Draw_Bit_Rate_Change_Time(float Tau);
+	float Draw_Bit_Rate_Change_Time(float Tau, bool rng);
 	void Push_User_To_The_End_Of_The_Queue();
 	void Free_Up_The_Resource_Blocks(User* user);
-	void Assign_User_To_Resource_Block(User* User);
+	void Free_Up_All_Of_The_Resource_Blocks();
+	void Assign_User_To_Resource_Block(User* User, bool rng);
 	void Bts_INIT();
+
+	int Send_Data_To_User(User* user);
 	/// GETTERS ///
 	
 	std::queue<User*> Get_User_list();
@@ -47,13 +49,14 @@ public:
 	int Get_Resource_Block_Count_From_Bts() { return Bts_->Get_Resource_Block_Count(); }
 	/// SETTERS ///
 	
-	void Set_BTS_Data();
+	void Set_BTS_Data(bool rng);
 	void Set_BTS_Error(int User_Id);
 	void Set_Time_Until_New_User_Arives(int Time_Until_New_User_Arives);
 	void Set_Time_Until_Bts_Assigns_Block(int Time_Until_Bts_Assigns_Block);
 	void Set_Bit_Rate_Change_Time(float Time_Until_New_Bit_Rate_Is_Being_Drawn);
 	void Set_Chanel_Busy_Flag(bool Channel_Busy);
 	void Set_User_Data_To_Be_Fetched();
+	
 	
 
 private:

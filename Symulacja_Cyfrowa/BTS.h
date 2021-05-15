@@ -17,14 +17,16 @@ public:
 
 	void Set_Resource_Block_Count(int Resource_Block_Count);
 	void Set_Reousrce_Block_Cap();
-	std::vector<Resource_Block_>Get_Resource_Blocks_() { return Resource_Blocks_; }
-	void Set_Data();
+	//void Set_Data(bool rng);
 	void Set_Transmission_Succes_Flag(int Current_User_Handled_ID);
 	void Set_Resource_Blocks_Size();
+	void Set_User_Pointer_To_Resource_Block(User* user, int Vector_i);
+	void Set_Bit_Rate(int Bit_Rate, int Vector_i);
+	void Set_Error_Flag(bool Error_Flag, int Vector_i);
 	//std::vector<int> Set_Resource_Block_To_User(int Packets_Per_User);
 
 	/// GETTERS ///
-
+	std::vector<Resource_Block_>Get_Resource_Blocks_() { return Resource_Blocks_; }
 	bool Get_Blocks_Depleted_Flag();
 	int Get_Resource_Block_Count() { return Resource_Block_Count_; }
 	std::vector<int>Get_Resource_Block_Map() { return Resource_Block_Map_; }

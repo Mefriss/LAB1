@@ -1,5 +1,6 @@
-﻿  Network.cpp
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(47,2): warning C4240: nonstandard extension used: access to 'BTS::Resource_Block_' now defined to be 'private', previously it was defined to be 'public'
+﻿  Simulator.cpp
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(49,2): warning C4240: nonstandard extension used: access to 'BTS::Resource_Block_' now defined to be 'private', previously it was defined to be 'public'
 C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(14): message : see declaration of 'BTS::Resource_Block_'
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Network.cpp(181,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(39,49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(28): warning C4715: 'Simulator::Mode_Select': not all control paths return a value
   Symulacja_Cyfrowa.vcxproj -> C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\x64\Debug\Symulacja_Cyfrowa.exe

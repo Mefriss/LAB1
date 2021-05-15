@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="BTS.h" />
     <ClInclude Include="Network.h" />
+    <ClInclude Include="RNG.h" />
     <ClInclude Include="Simulator.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
@@ -152,6 +153,7 @@
     <ClCompile Include="BTS.cpp" />
     <ClCompile Include="Main_Class.cpp" />
     <ClCompile Include="Network.cpp" />
+    <ClCompile Include="RNG.cpp" />
     <ClCompile Include="Simulator.cpp" />
     <ClCompile Include="User.cpp" />
   </ItemGroup>
