@@ -7,11 +7,14 @@
 #include "User.h"
 #include "BTS.h"
 #include <random>
+#include "RNG.h"
 
 class Network
 {
 public:
 
+	Network();
+	
 	void Create_New_Bts();
 	int Draw_User_Arival_Time(int Time_Elapsed);
 	void Add_New_User(User* New_User);
@@ -19,7 +22,7 @@ public:
 	bool Check_Bts_Blocks_Depleted();
 	int Calculate_Block_Assingment_Time(int Time_Elapsed, int Assingmnet_Time_Step = 1);
 	void Remove_User();
-	void Generate_Packet_And_Add_New_User(int Id,bool rng);
+	void Generate_Packet_And_Add_New_User(bool Early_Phase_User,int Id,bool rng);
 	void Pop_Arival_Time();
 	std::vector<int> Map_Bts_Blocks(int Blocs_Per_User = 1);
 	void Draw_New_Bit_Rate_For_The_First_User(User* user, bool rng);
@@ -47,6 +50,9 @@ public:
 	int Get_Data_From_User(User* user);
 	float Get_Bit_Rate_Change_Time() { return Time_Until_New_Bit_Rate_Is_Being_Drawn_; }
 	int Get_Resource_Block_Count_From_Bts() { return Bts_->Get_Resource_Block_Count(); }
+	int Get_Bit_Rate_Temp() { return Bit_Rate_Temp; }
+	
+	
 	/// SETTERS ///
 	
 	void Set_BTS_Data(bool rng);
@@ -60,11 +66,14 @@ public:
 	
 
 private:
+
+	RNG* Rng_;
 	std::queue<User*> User_List_;
 	std::queue<int> User_Arival_Times_;
 	//std::queue<int> User_Arival_Times_;
 	BTS* Bts_;
 	//int User_Creation_Time
+	int Bit_Rate_Temp;
 	bool Channel_Busy_;
 	float Time_Until_New_Bit_Rate_Is_Being_Drawn_;
 	int User_Arival_Time_;

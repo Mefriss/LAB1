@@ -3,9 +3,14 @@
 #include <spdlog/spdlog.h>
 
 #include "BTS.h"
+#include "Stats.h"
+#include "RNG.h"
 
 
-
+Network::Network()
+{
+	Rng_ = new RNG(1);
+}
 
 void Network::Create_New_Bts()
 {
@@ -16,8 +21,9 @@ void Network::Create_New_Bts()
 int Network::Draw_User_Arival_Time(int Time_Elapsed)
 {
 
-	User_Arival_Time_ = Time_Elapsed + rand() % 10 + 1;
-	User_Arival_Times_.push(User_Arival_Time_);
+	//User_Arival_Time_ = Time_Elapsed + rand() % 10 + 1;
+	User_Arival_Time_ = Rng_->Rand() * 10;
+	//User_Arival_Times_.push(User_Arival_Time_);
 	return User_Arival_Time_;
 }
 
@@ -135,7 +141,7 @@ void Network::Assign_User_To_Resource_Block(User* User, bool rng)
 	if (Iterator > 0)
 		Bts_->Set_User_Pointer_To_Resource_Block(User, Iterator);
 	if (rng)
-		Bts_->Set_Error_Flag(Bts_->Draw_Error(), Iterator);
+		Bts_->Set_Error_Flag(Rng_->RndZeroOne(0.25), Iterator);
 	else
 		Bts_->Set_Error_Flag(false, Iterator);
 	
@@ -161,12 +167,14 @@ int Network::Send_Data_To_User(User* user)
 	{
 		if(Bts_->Get_Resource_Blocks_()[i].user != nullptr && Bts_->Get_Resource_Blocks_()[i].user->Get_User_ID() == user->Get_User_ID())// sprawdzamy czy ten u¿ytkownik odbiera dane
 		{
+			spdlog::debug("Block no. {} assigned to user with ID: {}", i, Bts_->Get_Resource_Blocks_()[i].user->Get_User_ID());
 			Data_To_Send += Bts_->Get_Resource_Blocks_()[i].Bit_Rate_;
 		}
 		
 	}
 	
 	std::cout << std::endl;
+	Bit_Rate_Temp = Data_To_Send;
 	spdlog::debug("Transmission Rate for user with ID: {} = {} kbps/s", user->Get_User_ID(), Data_To_Send);
 	user->Subtract_User_Data(Data_To_Send);
 	return Data_To_Send;
@@ -196,10 +204,10 @@ void Network::Remove_User()
 }
 
 
-void Network::Generate_Packet_And_Add_New_User(int Id,bool rng)
+void Network::Generate_Packet_And_Add_New_User(bool Early_Phase_User,int Id,bool rng)
 {
 	
-	User* New_User = new User(Id, Bts_->Get_Resource_Block_Count(),rng);
+	User* New_User = new User(Early_Phase_User,Id, Bts_->Get_Resource_Block_Count(),rng);
 	//spdlog::debug("New user with id: {} \n", net)
 	//New_User->Set_Data_To_Be_Fetched();
 	User_List_.push(New_User);
@@ -212,8 +220,13 @@ void Network::Pop_Arival_Time()
 float Network::Draw_Bit_Rate_Change_Time(float Tau,bool rng)
 {
 	float time;
-	if(rng)
-		time = rand() % 10 + 1;
+	//if(rng)
+	//	time = rand() % 10 + 1;
+	//else
+	//	time = 5;
+	//
+	if (rng)
+		time = Rng_->RndExp(Tau);
 	else
 		time = 5;
 	

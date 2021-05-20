@@ -6,7 +6,7 @@
 //	return;
 //}
 
-User::User(int User_ID, int Resource_Block_Count,bool rng)
+User::User(bool Early_Phase_User,int User_ID, int Resource_Block_Count,bool rng) : Early_Phase_User_(Early_Phase_User) 
 {
 	//Bit_Rate_.reserve(1);
 	for (int i = 0; i < 15; i++)	

@@ -13,7 +13,7 @@ public:
 	struct Resource_Blocks_;
 	//std::vector<int>Get_Bit_Rate();
 
-	User(int User_ID, int Resource_Block_Count, bool rng);
+	User(bool Early_Phase_User, int User_ID, int Resource_Block_Count, bool rng);
 	~User();
 	
 	void Save_Blocks(std::vector<int>Recived_Blocks);
@@ -29,6 +29,7 @@ public:
 	std::vector<int> Get_Bit_Rate_Vector() { return Bit_Rate_; }
 	int Get_User_Data() { return User_Data_; }
 	int Get_Assigneed_Blocks_Count() { return Assigned_Blocks_; }
+	bool Get_Early_Phase_Flag() { return Early_Phase_User_; }
 	// SETTERS //
 	void Subtract_User_Data(int Data_Fetched);
 	void Update_Amount_Of_Recived_Resource_Blocks();
@@ -39,6 +40,7 @@ public:
 
 private:
 
+	bool Early_Phase_User_ = true;
 	int User_Data_;
 	int Assigned_Blocks_ = 3;
 	int User_ID_;

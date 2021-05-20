@@ -1,19 +1,5 @@
-﻿  BTS.cpp
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(49,2): warning C4240: nonstandard extension used: access to 'BTS::Resource_Block_' now defined to be 'private', previously it was defined to be 'public'
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(14): message : see declaration of 'BTS::Resource_Block_'
-  Main_Class.cpp
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(49,2): warning C4240: nonstandard extension used: access to 'BTS::Resource_Block_' now defined to be 'private', previously it was defined to be 'public'
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(14): message : see declaration of 'BTS::Resource_Block_'
-  Network.cpp
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(49,2): warning C4240: nonstandard extension used: access to 'BTS::Resource_Block_' now defined to be 'private', previously it was defined to be 'public'
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(14): message : see declaration of 'BTS::Resource_Block_'
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Network.cpp(216,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  RNG.cpp
-  Simulator.cpp
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(49,2): warning C4240: nonstandard extension used: access to 'BTS::Resource_Block_' now defined to be 'private', previously it was defined to be 'public'
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(14): message : see declaration of 'BTS::Resource_Block_'
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(39,49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  User.cpp
-  Generating Code...
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(28): warning C4715: 'Simulator::Mode_Select': not all control paths return a value
+﻿  Stats.cpp
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.h(16,36): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.h(18,34): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.cpp(50,87): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Symulacja_Cyfrowa.vcxproj -> C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\x64\Debug\Symulacja_Cyfrowa.exe

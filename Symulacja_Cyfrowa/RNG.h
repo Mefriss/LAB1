@@ -10,7 +10,10 @@ public:
 
     // Draws number between <0,1>
     double Rand();
-
+    double Rand(double min, double max);
+    double RndExp(double lambda);
+    bool RndZeroOne(double p);
+	
     int get_kernel() { return kernel_; };
 private:
     int kernel_;

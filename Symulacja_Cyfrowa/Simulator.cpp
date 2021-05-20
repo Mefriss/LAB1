@@ -3,7 +3,7 @@
 #include <iostream>
 #include "spdlog/spdlog.h"
 #include "Network.h"
-
+#include "Stats.h"
 
 bool Simulator::Mode_Select(int Mode_Selection)
 { 
@@ -29,15 +29,16 @@ bool Simulator::Mode_Select(int Mode_Selection)
 
 
 
-void Simulator::M1_Operation(Network* network, bool Mode, bool Rng_Toggle, bool Toggle_Logs, int time)
+void Simulator::M1_Operation(Network* network, bool Mode,int Early_Phase_Time,  bool Rng_Toggle, bool Toggle_Logs, int time)
 {
+	Stats* Statistics = new Stats();
 	simulator_clock_ = 0;
 	Remove_All_Users(network);
 	std::cout << "Rozpoczêto symulacjê metotd¹ M1! \n";
 	int Id = -1;
 	network->Set_Chanel_Busy_Flag(false);
 	network->Draw_User_Arival_Time(simulator_clock_);//losujemy czas przyjœcia pierwszego usera
-	network->Set_Bit_Rate_Change_Time(network->Draw_Bit_Rate_Change_Time(1, Rng_Toggle));
+	network->Set_Bit_Rate_Change_Time(network->Draw_Bit_Rate_Change_Time(0.1, Rng_Toggle));
 	bool Draw_Forever = true;
 	//network->Bts_INIT();
 
@@ -52,6 +53,10 @@ void Simulator::M1_Operation(Network* network, bool Mode, bool Rng_Toggle, bool 
 		while (No_Event == false)
 		{
 			No_Event = true;
+
+			if (Early_Phase_Time == static_cast<int>(simulator_clock_))
+				Early_Phase = false;
+		
 			if (static_cast<int>(network->Get_Bit_Rate_Change_Time()) == 0)
 			{
 				if(network->Get_User_list().size() == 0)
@@ -67,7 +72,7 @@ void Simulator::M1_Operation(Network* network, bool Mode, bool Rng_Toggle, bool 
 					network->Push_User_To_The_End_Of_The_Queue();
 
 				}
-				network->Set_Bit_Rate_Change_Time(network->Draw_Bit_Rate_Change_Time(1, Rng_Toggle));
+				network->Set_Bit_Rate_Change_Time(network->Draw_Bit_Rate_Change_Time(0.1, Rng_Toggle));
 				No_Event = false;
 			}
 			if (network->Get_Time_Until_New_User_Arives() == 0) /// czy w tej chwili czasowej pojawi siê u¿ytkownik?
@@ -76,15 +81,21 @@ void Simulator::M1_Operation(Network* network, bool Mode, bool Rng_Toggle, bool 
 				//if(simulator_clock_ < 50 || Draw_Forever == true)
 				//{
 				++Id;
-
+				
 				//if (Toggle_Logs_)
 				spdlog::debug("New user has been created \n \n");
 				network->Set_Time_Until_New_User_Arives(network->Draw_User_Arival_Time(0)); // Uncomment for random time
 				//network->Set_Time_Until_New_User_Arives(2);
-				network->Generate_Packet_And_Add_New_User(Id, Rng_Toggle);
+				network->Generate_Packet_And_Add_New_User(Early_Phase,Id, Rng_Toggle);
+				
+				
 				std::cout << "Nowy u¿ytkownik! ID: " << network->Get_User_list().back()->Get_User_ID() << std::endl;
 				spdlog::debug("Data to fetch: {} \n", network->Get_User_list().back()->Get_User_Data() );
 				//network->Set_User_Data_To_Be_Fetched();
+
+				Statistics->Reserve_Place_For_User_Bitrate();
+				Statistics->Update_Wait_Times_Sum(static_cast<int>(simulator_clock_), network->Get_User_list().back(), true);
+				
 				No_Event = false;
 				//}
 
@@ -98,8 +109,9 @@ void Simulator::M1_Operation(Network* network, bool Mode, bool Rng_Toggle, bool 
 				spdlog::debug("All Resource blocks has been assigned to user \n \n");
 				network->Set_Chanel_Busy_Flag(false);
 				//network->Free_Up_The_Resource_Blocks(network->Get_User_list().front());
+				Statistics->Update_Wait_Times_Sum(static_cast<int>(simulator_clock_), network->Get_User_list().front(), false);
 				network->Remove_User();
-
+				
 				//spdlog::info("User removed from queue \n \n");
 				No_Event = false;
 
@@ -141,6 +153,8 @@ void Simulator::M1_Operation(Network* network, bool Mode, bool Rng_Toggle, bool 
 				{
 					//spdlog::debug("Transmission Rate for user with ID: {} = {} kbps/s",network->Get_User_list().front()->Get_User_ID(), network->Send_Data_To_User(network->Get_User_list().front()));
 					network->Send_Data_To_User(network->Get_User_list().front());
+					Statistics->Update_Throughputs_Sum(network->Get_User_list().front(),network->Get_Bit_Rate_Temp());
+					Statistics->Update_User_Bitrate(network->Get_Bit_Rate_Temp(),network->Get_User_list().front());
 					spdlog::debug("Remaining Data for user with ID: {} = {} bytes",network->Get_User_list().front()->Get_User_ID() , network->Get_User_list().front()->Get_User_Data());
 					
 					//spdlog::debug("Resource block has been assigned to user \n \n");
@@ -149,7 +163,7 @@ void Simulator::M1_Operation(Network* network, bool Mode, bool Rng_Toggle, bool 
 				}
 
 				No_Event = false;
-				Step_In(Mode);
+				//Step_In(Mode);
 
 			}
 
@@ -169,6 +183,10 @@ void Simulator::M1_Operation(Network* network, bool Mode, bool Rng_Toggle, bool 
 		//std::cout << network->Get_Block_Assingment_Time()<<std::endl;
 		++simulator_clock_;
 	}
+	Statistics->Calculate_AVG_Wait_Time(simulator_clock_-Early_Phase_Time);
+	Statistics->Calculate_AVG_Throughput(simulator_clock_-Early_Phase_Time);
+	Statistics->Calculate_Users_AVG_Throughput();
+	network->Free_Up_All_Of_The_Resource_Blocks();
 }
 	
 
@@ -198,7 +216,9 @@ void Simulator::Main()
 	std::cout << "Czy chcesz wyœwietlaæ logi? " << std::endl << "0 - Nie     1 - Tak" << std::endl << "Twój Wybór: ";
 	std::cin >> Toggle_Logs_;
 	if (Toggle_Logs_)
-	spdlog::set_level(spdlog::level::debug);
+		spdlog::set_level(spdlog::level::debug);
+	//else
+	//	spdlog::set_level(spdlog::level::info);
 	Network* network = new Network();
 	//if(Toggle_Logs_)
 	spdlog::debug( "Network Has been created \n");
@@ -222,7 +242,13 @@ void Simulator::Main()
 	std::cin >> Mode_Selection;
 	Current_Mode = Mode_Select(Mode_Selection);
 	//Operation(network, Current_Mode, 200);
-	M1_Operation(network, Current_Mode,Rng_Toggle,Toggle_Logs_,200);
+
+	std::cout << "Proszê okreœliæ czas trwania Symulacji [ms] : " << std::endl << "Twój Wybór: ";
+	std::cin >> Simulation_Time_;
+	
+	std::cout << "Proszê okreœliæ czas trwania fazy pocz¹tkowej [ms] : "  << std::endl << "Twój Wybór: ";
+	std::cin >> Early_Phase_Time;
+	M1_Operation(network, Current_Mode,Early_Phase_Time,Rng_Toggle,Toggle_Logs_,Simulation_Time_);
 	
 	
 
