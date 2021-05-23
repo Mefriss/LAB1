@@ -10,6 +10,17 @@
 Network::Network()
 {
 	Rng_ = new RNG(1);
+	
+	//int number_of_seeds = 20;
+	//std::vector<int> seeds;
+	//for (int i = 0; i < number_of_seeds; ++i)
+	//{
+	//	for (int j = 0; j < number_of_rands; ++j)
+	//	{
+	//		uniform_generator.Rand();
+	//	}
+	//	seeds.push_back(uniform_generator.get_kernel());
+	//}
 }
 
 void Network::Create_New_Bts()
@@ -147,6 +158,8 @@ void Network::Assign_User_To_Resource_Block(User* User, bool rng)
 	
 	Bts_-> Set_Bit_Rate(User->Get_Bit_Rate_Vector().back(), Iterator);
 	User->Pop_Bit_Rate_Vector();
+	//User->Push_New_Bitrtate();
+	Draw_Bitrates_Table_For_User(User);
 	
 	if (Bts_->Get_Resource_Blocks_()[Iterator].Error_Flag_ == true)
 		Bts_->Set_Bit_Rate(0, Iterator);
@@ -180,6 +193,11 @@ int Network::Send_Data_To_User(User* user)
 	return Data_To_Send;
 }
 
+void Network::Draw_Bitrates_Table_For_User(User* user)
+{
+	user->Push_New_Bitrtate(Rng_->Rand(20, 800));
+}
+
 std::queue<User*> Network::Get_User_list()
 {
 	return User_List_;
@@ -210,6 +228,8 @@ void Network::Generate_Packet_And_Add_New_User(bool Early_Phase_User,int Id,bool
 	User* New_User = new User(Early_Phase_User,Id, Bts_->Get_Resource_Block_Count(),rng);
 	//spdlog::debug("New user with id: {} \n", net)
 	//New_User->Set_Data_To_Be_Fetched();
+	for (int i = 0; i < 15; i++)
+	Draw_Bitrates_Table_For_User(New_User);
 	User_List_.push(New_User);
 }
 

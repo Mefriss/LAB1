@@ -1,16 +1,16 @@
 #include "User.h"
 #include "spdlog/spdlog.h"
+#include "RNG.h"
 
-//std::vector<int>User::Get_Bit_Rate()
-//{
-//	return;
-//}
 
-User::User(bool Early_Phase_User,int User_ID, int Resource_Block_Count,bool rng) : Early_Phase_User_(Early_Phase_User) 
+User::User(bool Early_Phase_User,int User_ID, int Resource_Block_Count,bool rng)
 {
 	//Bit_Rate_.reserve(1);
-	for (int i = 0; i < 15; i++)	
-		Bit_Rate_.push_back(Draw_New_Bit_Rate(rng)); //Przep³ywnoœæ - r,k – zmienna losowa o rozk³adzie jednostajnym w przedziale <20, 800> kbit/s
+	//for (int i = 0; i < 15; i++)	
+	//	Bit_Rate_.push_back(Draw_New_Bit_Rate(rng)); //Przep³ywnoœæ - r,k – zmienna losowa o rozk³adzie jednostajnym w przedziale <20, 800> kbit/s
+	//Rng_ = new RNG(1);1
+	
+	Early_Phase_User_ = Early_Phase_User;
 	User_ID_ = User_ID;
 	User_Data_ = Draw_Data_To_Be_Fetched();
 	Assigned_Blocks_ = 3;
@@ -22,21 +22,20 @@ User::~User()
 	std::cout << "Usuniêto u¿ytkownika nr: " << User_ID_<< std::endl;
 }
 
-void User::Save_Blocks(std::vector<int>Recived_blocks)
-{
 
-
-
-}
 
 int User::Draw_Data_To_Be_Fetched()
 {
-	return (rand() % 10 + 1) * 250;
+	RNG* Rng_ = new RNG(44);
+	return (static_cast<int>( Rng_->Rand(250, 2500)));
 }
 int User::Draw_New_Bit_Rate(bool rng)
 {
+	RNG* Rng_ = new RNG(44);
+	
+	
 	if(rng)
-	return (rand() % 800 + 21);
+	return static_cast<int>(Rng_->Rand(20, 800));
 	else
 	{
 		return 1000;
@@ -76,6 +75,11 @@ void User::Set_Amount_Of_Recived_Resource_Blocks(int blocks)
 void User::Set_Data_To_Be_Fetched()
 {
 	User_Data_ = Draw_Data_To_Be_Fetched();
+}
+
+void User::Push_New_Bitrtate(int BitRate)
+{
+	Bit_Rate_.push_back(BitRate);
 }
 
 void User::Update_Bit_Rate(bool rng)

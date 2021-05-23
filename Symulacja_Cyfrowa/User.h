@@ -6,6 +6,8 @@
 //#include "BTS.h"
 #include <iostream>
 
+#include "RNG.h"
+
 class User
 {
 public:
@@ -36,6 +38,7 @@ public:
 	void Set_Amount_Of_Recived_Resource_Blocks(int blocks = 3);
 	void Set_Bit_Rate();
 	void Set_Data_To_Be_Fetched();
+	void Push_New_Bitrtate(int Bitrate);
 	void Update_Bit_Rate(bool rng);
 
 private:
@@ -44,6 +47,7 @@ private:
 	int User_Data_;
 	int Assigned_Blocks_ = 3;
 	int User_ID_;
+	//RNG* Rng_ = new RNG(1);
 	std::vector<int>Bit_Rate_;////Przep³ywnoœæ - r,k – zmienna losowa o rozk³adzie jednostajnym w przedziale <20, 800> kbit/s
 	//std::vector<Resource_Blocks_>Recived_Blocks_;
 	

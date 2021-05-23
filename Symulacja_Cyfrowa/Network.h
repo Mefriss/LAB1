@@ -37,6 +37,9 @@ public:
 	void Bts_INIT();
 
 	int Send_Data_To_User(User* user);
+
+	void Draw_Bitrates_Table_For_User(User* user);
+
 	/// GETTERS ///
 	
 	std::queue<User*> Get_User_list();

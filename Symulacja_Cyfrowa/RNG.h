@@ -9,8 +9,9 @@ public:
     virtual ~RNG();
 
     // Draws number between <0,1>
-    double Rand();
     double Rand(double min, double max);
+    double Rand();
+    
     double RndExp(double lambda);
     bool RndZeroOne(double p);
 	

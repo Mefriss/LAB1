@@ -1,5 +1,1 @@
-﻿  Stats.cpp
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.h(16,36): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.h(18,34): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.cpp(50,87): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Symulacja_Cyfrowa.vcxproj -> C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\x64\Debug\Symulacja_Cyfrowa.exe
+﻿  Symulacja_Cyfrowa.vcxproj -> C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\x64\Debug\Symulacja_Cyfrowa.exe

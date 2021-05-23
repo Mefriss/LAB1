@@ -66,9 +66,9 @@ void Stats::Calculate_Users_AVG_Throughput()
 		AVG_Users_Throughput_[i] /= User_Transmission_Count[i];
 		spdlog::debug("User with Id: {} Had average Throughput of: {} kbps/s", i+First_User_That_Apeared_After_Early_Phase_Id, AVG_Users_Throughput_[i]);
 	}
-	//std::ofstream output_file("./example.txt");
-	//std::ostream_iterator<double> output_iterator(output_file, "\n");
-	//std::copy(First_User_That_Apeared_After_Early_Phase_Id, AVG_Users_Throughput_.size(), output_iterator);
+	std::ofstream output_file("./example.txt");
+	std::ostream_iterator<int> output_iterator(output_file, "\n");
+	std::copy(AVG_Users_Throughput_.begin(), AVG_Users_Throughput_.end(), output_iterator);
 }
 
 void Stats::Update_User_Bitrate(int Bit_Rate,User* User)
