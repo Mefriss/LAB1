@@ -15,7 +15,7 @@ public:
 	struct Resource_Blocks_;
 	//std::vector<int>Get_Bit_Rate();
 
-	User(bool Early_Phase_User, int User_ID, int Resource_Block_Count, bool rng);
+	User(bool Early_Phase_User, int User_ID, int Resource_Block_Count, bool rng, int Data);
 	~User();
 	
 	void Save_Blocks(std::vector<int>Recived_Blocks);
@@ -39,7 +39,7 @@ public:
 	void Set_Bit_Rate();
 	void Set_Data_To_Be_Fetched();
 	void Push_New_Bitrtate(int Bitrate);
-	void Update_Bit_Rate(bool rng);
+	void Update_Bit_Rate(bool rng, int Bit_Rate);
 
 private:
 
@@ -47,7 +47,7 @@ private:
 	int User_Data_;
 	int Assigned_Blocks_ = 3;
 	int User_ID_;
-	//RNG* Rng_ = new RNG(1);
+	//RNG* Rng_;
 	std::vector<int>Bit_Rate_;////Przep³ywnoœæ - r,k – zmienna losowa o rozk³adzie jednostajnym w przedziale <20, 800> kbit/s
 	//std::vector<Resource_Blocks_>Recived_Blocks_;
 	

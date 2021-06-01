@@ -1,1 +1,52 @@
-﻿  Symulacja_Cyfrowa.vcxproj -> C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\x64\Debug\Symulacja_Cyfrowa.exe
+﻿  BTS.cpp
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(49,2): warning C4240: nonstandard extension used: access to 'BTS::Resource_Block_' now defined to be 'private', previously it was defined to be 'public'
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(14): message : see declaration of 'BTS::Resource_Block_'
+  Main_Class.cpp
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(49,2): warning C4240: nonstandard extension used: access to 'BTS::Resource_Block_' now defined to be 'private', previously it was defined to be 'public'
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(14): message : see declaration of 'BTS::Resource_Block_'
+  Network.cpp
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(49,2): warning C4240: nonstandard extension used: access to 'BTS::Resource_Block_' now defined to be 'private', previously it was defined to be 'public'
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(14): message : see declaration of 'BTS::Resource_Block_'
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.h(16,36): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.h(18,34): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Network.cpp(46,58): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Network.cpp(242,111): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Network.cpp(266,66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  RNG.cpp
+  Simulator.cpp
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(49,2): warning C4240: nonstandard extension used: access to 'BTS::Resource_Block_' now defined to be 'private', previously it was defined to be 'public'
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\BTS.h(14): message : see declaration of 'BTS::Resource_Block_'
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.h(16,36): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.h(18,34): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(40,49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(77,89): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(189,71): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(190,72): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Stats.cpp
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.h(16,36): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.h(18,34): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.cpp(48,38): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.cpp(71,87): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xutility(4421,18): warning C4244: 'argument': conversion from 'double' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include\xutility(4457): message : see reference to function template instantiation '_OutIt std::_Copy_unchecked<double*,_OutIt>(_InIt,_InIt,_OutIt)' being compiled
+          with
+          [
+              _OutIt=std::ostream_iterator<int,char,std::char_traits<char>>,
+              _InIt=double *
+          ]
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Stats.cpp(95): message : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,std::ostream_iterator<int,char,std::char_traits<char>>>(_InIt,_InIt,_OutIt)' being compiled
+          with
+          [
+              _OutIt=std::ostream_iterator<int,char,std::char_traits<char>>,
+              _Ty=double,
+              _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<double>>>
+          ]
+  User.cpp
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\User.cpp(33,10): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\Simulator.cpp(28): warning C4715: 'Simulator::Mode_Select': not all control paths return a value
+  Symulacja_Cyfrowa.vcxproj -> C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\x64\Debug\Symulacja_Cyfrowa.exe

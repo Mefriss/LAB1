@@ -37,12 +37,32 @@ void Stats::Update_Wait_Times_Sum(int Time_Elapsed, User* User, bool Arive)
 		
 }
 
+void Stats::Update_Sytem_Throughput(int bit_rate)
+{
+	System_Throughput_.push_back(bit_rate);
+}
+
+void Stats::Calculate_AVG_BTS_Throughput()
+{
+	int sum = 0;
+	int size = System_Throughput_.size();
+	for (int i = 0; i < System_Throughput_.size(); i++)
+	{
+		sum += System_Throughput_.back();
+		System_Throughput_.pop_back();
+	}
+	AVG_System_Throughput_.push_back(sum / size);
+}
+
 void Stats::Calculate_AVG_Throughput(int Time_Elapsed)
 {
 	double time = Time_Elapsed;
 	AVG_Throughput_ = Throughputs_Sum_ / static_cast<double>(Transmissions_Count);
-	spdlog::debug("Average Throughput : {} kbp/s", AVG_Throughput_);
+	spdlog::info("Average Throughput : {} kbp/s", AVG_Throughput_);
+
+
 }
+
 
 
 void Stats::Calculate_AVG_Wait_Time(int Time_Elapsed)
@@ -56,19 +76,36 @@ void Stats::Calculate_AVG_Wait_Time(int Time_Elapsed)
 	//spdlog::debug("Sum : {}", Sum);
 	spdlog::debug("User_Count : {}", User_Count );
 	AVG_Wait_Time_ = Sum / User_Count;
-	spdlog::debug("Average wait time : {} ms",AVG_Wait_Time_);
+	spdlog::info("Average wait time : {} ms",AVG_Wait_Time_);
 }
 
 void Stats::Calculate_Users_AVG_Throughput()
 {
 	for(int i = First_User_That_Apeared_After_Early_Phase_Id; i < AVG_Users_Throughput_.size(); i++)
 	{
-		AVG_Users_Throughput_[i] /= User_Transmission_Count[i];
-		spdlog::debug("User with Id: {} Had average Throughput of: {} kbps/s", i+First_User_That_Apeared_After_Early_Phase_Id, AVG_Users_Throughput_[i]);
+		if(User_Transmission_Count[i]!= 0)
+		{
+			AVG_Users_Throughput_[i] /= User_Transmission_Count[i];
+			spdlog::debug("User with Id: {} Had average Throughput of: {} kbps/s", i + First_User_That_Apeared_After_Early_Phase_Id, AVG_Users_Throughput_[i]);
+
+		}
 	}
 	std::ofstream output_file("./example.txt");
 	std::ostream_iterator<int> output_iterator(output_file, "\n");
+	std::copy(AVG_System_Throughput_.begin(), AVG_System_Throughput_.end(), output_iterator);
+}
+
+void Stats::Save_To_File()
+{
+	std::ofstream output_file("./throughputs.txt");
+	std::ostream_iterator<int> output_iterator(output_file, "\n");
 	std::copy(AVG_Users_Throughput_.begin(), AVG_Users_Throughput_.end(), output_iterator);
+	//spdlog::debug("Average Throughput : {} kbp/s", AVG_Throughput_);
+}
+
+void Stats::Inc_Err_Count()
+{
+	Error_Count_++;
 }
 
 void Stats::Update_User_Bitrate(int Bit_Rate,User* User)

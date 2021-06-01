@@ -22,6 +22,7 @@ public:
 
 private:
 
+	
 	int Simulation_Time_ = 0;
 	bool Early_Phase = true;
 	int Early_Phase_Time = 0;

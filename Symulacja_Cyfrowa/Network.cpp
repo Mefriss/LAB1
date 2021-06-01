@@ -5,22 +5,32 @@
 #include "BTS.h"
 #include "Stats.h"
 #include "RNG.h"
-
+#include "fstream"
 
 Network::Network()
 {
-	Rng_ = new RNG(1);
 	
-	//int number_of_seeds = 20;
-	//std::vector<int> seeds;
-	//for (int i = 0; i < number_of_seeds; ++i)
-	//{
-	//	for (int j = 0; j < number_of_rands; ++j)
-	//	{
-	//		uniform_generator.Rand();
-	//	}
-	//	seeds.push_back(uniform_generator.get_kernel());
-	//}
+	
+	std::fstream Seeds;
+	Seeds.open("seeds.txt");
+	std::string seed;
+	for (int i = 0; i < 100; ++i)
+	{
+		std::getline(Seeds, seed);
+		Seeds_.push_back(stoi(seed));
+		
+	}
+	Data_Generator_ = new RNG(Seeds_.back());
+	Seeds_.pop_back();
+	Zero_And_One_Generator_ = new RNG(Seeds_.back());
+	Seeds_.pop_back();
+	Bit_Rate_Time_Change_Generator_ = new RNG(Seeds_.back());
+	Seeds_.pop_back();
+	Bit_Rate_Generator_ = new RNG(Seeds_.back());
+	Seeds_.pop_back();
+	User_Arrival_Time_Generator_ = new RNG(Seeds_.back());
+	Seeds_.pop_back();
+
 }
 
 void Network::Create_New_Bts()
@@ -33,7 +43,7 @@ int Network::Draw_User_Arival_Time(int Time_Elapsed)
 {
 
 	//User_Arival_Time_ = Time_Elapsed + rand() % 10 + 1;
-	User_Arival_Time_ = Rng_->Rand() * 10;
+	User_Arival_Time_ = User_Arrival_Time_Generator_->RndExp(1.52);
 	//User_Arival_Times_.push(User_Arival_Time_);
 	return User_Arival_Time_;
 }
@@ -141,7 +151,7 @@ void Network::Free_Up_All_Of_The_Resource_Blocks()
 	}
 }
 
-void Network::Assign_User_To_Resource_Block(User* User, bool rng)
+void Network::Assign_User_To_Resource_Block(User* User, bool rng,Stats* Stats)
 {
 
 	int Iterator = Bts_->Get_Resource_Block_Count() - 1;
@@ -152,7 +162,7 @@ void Network::Assign_User_To_Resource_Block(User* User, bool rng)
 	if (Iterator > 0)
 		Bts_->Set_User_Pointer_To_Resource_Block(User, Iterator);
 	if (rng)
-		Bts_->Set_Error_Flag(Rng_->RndZeroOne(0.25), Iterator);
+		Bts_->Set_Error_Flag(Zero_And_One_Generator_->RndZeroOne(0.1), Iterator);
 	else
 		Bts_->Set_Error_Flag(false, Iterator);
 	
@@ -162,7 +172,14 @@ void Network::Assign_User_To_Resource_Block(User* User, bool rng)
 	Draw_Bitrates_Table_For_User(User);
 	
 	if (Bts_->Get_Resource_Blocks_()[Iterator].Error_Flag_ == true)
+	{
 		Bts_->Set_Bit_Rate(0, Iterator);
+		if(User->Get_Early_Phase_Flag()==false)
+		{
+			Stats->Inc_Err_Count();
+		}
+	}
+		
 	
 	
 	
@@ -195,7 +212,7 @@ int Network::Send_Data_To_User(User* user)
 
 void Network::Draw_Bitrates_Table_For_User(User* user)
 {
-	user->Push_New_Bitrtate(Rng_->Rand(20, 800));
+	user->Push_New_Bitrtate(static_cast<int>(Bit_Rate_Generator_->Rand(20, 800)));
 }
 
 std::queue<User*> Network::Get_User_list()
@@ -225,11 +242,14 @@ void Network::Remove_User()
 void Network::Generate_Packet_And_Add_New_User(bool Early_Phase_User,int Id,bool rng)
 {
 	
-	User* New_User = new User(Early_Phase_User,Id, Bts_->Get_Resource_Block_Count(),rng);
+	User* New_User = new User(Early_Phase_User,Id, Bts_->Get_Resource_Block_Count(),rng,Bit_Rate_Generator_->Rand(20,800));
 	//spdlog::debug("New user with id: {} \n", net)
 	//New_User->Set_Data_To_Be_Fetched();
 	for (int i = 0; i < 15; i++)
-	Draw_Bitrates_Table_For_User(New_User);
+	{
+		Draw_Bitrates_Table_For_User(New_User);
+	}
+	
 	User_List_.push(New_User);
 }
 
@@ -246,9 +266,9 @@ float Network::Draw_Bit_Rate_Change_Time(float Tau,bool rng)
 	//	time = 5;
 	//
 	if (rng)
-		time = Rng_->RndExp(Tau);
+		time = static_cast<int>(Bit_Rate_Time_Change_Generator_->RndExp(Tau));
 	else
-		time = 5;
+		time = 1;
 	
 	return time;
 }

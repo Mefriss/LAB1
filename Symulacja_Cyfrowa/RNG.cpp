@@ -1,6 +1,9 @@
 #include "RNG.h"
 #include <cmath>
+#include <iterator>
 #include <math.h> 
+#include <vector>
+#include <fstream>
 
 RNG::RNG(int kernel) : kernel_(kernel)
 {
@@ -40,4 +43,23 @@ bool RNG::RndZeroOne(double p)
         return 1;
     else
     return 0;
+}
+
+void RNG::Generate_Seeds(int kernel)
+{
+    auto Seed_Gen = RNG(kernel);
+    
+    std::vector<int> seeds;
+    for (int i = 0; i < number_of_Rands_; ++i)
+    {
+        for (int j = 0; j < number_of_Rands_; ++j)
+        {
+            Seed_Gen.Rand();
+        }
+        seeds.push_back(Seed_Gen.get_kernel());
+    }
+
+    std::ofstream output_file("./seeds.txt");
+    std::ostream_iterator<int> output_iterator(output_file, "\n");
+    std::copy(seeds.begin(), seeds.end(), output_iterator);
 }

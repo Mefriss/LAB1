@@ -8,6 +8,7 @@
 #include "BTS.h"
 #include <random>
 #include "RNG.h"
+#include "Stats.h"
 
 class Network
 {
@@ -33,7 +34,7 @@ public:
 	void Push_User_To_The_End_Of_The_Queue();
 	void Free_Up_The_Resource_Blocks(User* user);
 	void Free_Up_All_Of_The_Resource_Blocks();
-	void Assign_User_To_Resource_Block(User* User, bool rng);
+	void Assign_User_To_Resource_Block(User* User, bool rng, Stats* Stats);
 	void Bts_INIT();
 
 	int Send_Data_To_User(User* user);
@@ -54,7 +55,7 @@ public:
 	float Get_Bit_Rate_Change_Time() { return Time_Until_New_Bit_Rate_Is_Being_Drawn_; }
 	int Get_Resource_Block_Count_From_Bts() { return Bts_->Get_Resource_Block_Count(); }
 	int Get_Bit_Rate_Temp() { return Bit_Rate_Temp; }
-	
+	//int Get_Temp_Data_To_Send_() { return  Temp_Data_To_Send_; }
 	
 	/// SETTERS ///
 	
@@ -70,7 +71,13 @@ public:
 
 private:
 
-	RNG* Rng_;
+	RNG* Data_Generator_;
+	RNG* Zero_And_One_Generator_;
+	RNG* Bit_Rate_Time_Change_Generator_;
+	RNG* Bit_Rate_Generator_;
+	RNG* User_Arrival_Time_Generator_;
+	//RNG* Rng_;
+	std::vector<int>Seeds_;
 	std::queue<User*> User_List_;
 	std::queue<int> User_Arival_Times_;
 	//std::queue<int> User_Arival_Times_;
@@ -83,7 +90,8 @@ private:
 	int Time_Until_New_User_Arives_;
 	int Block_Assignment_Time_;
 	int Time_Until_Bts_Assigns_Block_;
-	int Block_Assignment_Timer_;
+	//int Temp_Data_To_Send_;
+	//int Block_Assignment_Timer_;
 
 };
 
