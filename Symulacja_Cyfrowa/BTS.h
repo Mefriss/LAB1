@@ -10,29 +10,52 @@
 class BTS
 {
 public:
+
+	struct Resource_Block_;
+	
+	/// SETTERS ///
+
 	void Set_Resource_Block_Count(int Resource_Block_Count);
 	void Set_Reousrce_Block_Cap();
-	void Map_Reource_Block();
-	void Set_Data();
+	//void Set_Data(bool rng);
 	void Set_Transmission_Succes_Flag(int Current_User_Handled_ID);
-	void Wipe_Resource_Blocks_To_Be_Sent();
+	void Set_Resource_Blocks_Size();
+	void Set_User_Pointer_To_Resource_Block(User* user, int Vector_i);
+	void Set_Bit_Rate(int Bit_Rate, int Vector_i);
+	void Set_Error_Flag(bool Error_Flag, int Vector_i);
+	//std::vector<int> Set_Resource_Block_To_User(int Packets_Per_User);
+
+	/// GETTERS ///
+	std::vector<Resource_Block_>Get_Resource_Blocks_() { return Resource_Blocks_; }
 	bool Get_Blocks_Depleted_Flag();
+	int Get_Resource_Block_Count() { return Resource_Block_Count_; }
+	std::vector<int>Get_Resource_Block_Map() { return Resource_Block_Map_; }
+	
+	void Map_Reource_Block();
+	void Wipe_Resource_Blocks_To_Be_Sent();
 	bool Draw_Error();
 	void Wipe_Resource_Block_Map();
 	void Send_Data_To_User(int Bit_Rate);
-	void Send_Block_To_User(int Resource_Block_Count, std::vector<int>User_Bit_Rate_Vector);
-	//void Map_User(User* user);
-	std::vector<int> Set_Resource_Block_To_User(int Packets_Per_User);
+	void Send_Block_To_User(int Resource_Block_Count, std::vector<int>User_Bit_Rate_Vector,User* user);
 
-	std::vector<int>Get_Resource_Block_Map() { return Resource_Block_Map_; }
+	//void Map_User(User* user);
+	void init();
 	
 	BTS(int Resource_Block_Count);
 
 private:
 
-	
+	struct Resource_Block_
+	{
+		User* user = nullptr;
+		bool Error_Flag_;
+		int Bit_Rate_;
+	};
 	bool Blocks_Depleted;
-	int Resource_Block_Count_; // Zmienna k = 15
+
+	std::vector<Resource_Block_>Resource_Blocks_;
+	
+	int Resource_Block_Count_;
 	std::vector<int>Resource_Block_Cap_; // l maksymalnie 3
 	std::vector<int>Resource_Block_Map_; // tablica przypisuj¹ca bloki zasobów u¿ytkownikom o rozmiarze = Reource_block_count
 	std::vector<int>Resource_Blocks_To_Be_Sent;

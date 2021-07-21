@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Symulacja_Cyfrowa\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\chosi\Documents\C++\Symulacja cyfrowa\Symulacja_Cyfrowa\Symulacja_Cyfrowa\spdlog\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Symulacja_Cyfrowa\spdlog\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,14 +145,18 @@
   <ItemGroup>
     <ClInclude Include="BTS.h" />
     <ClInclude Include="Network.h" />
+    <ClInclude Include="RNG.h" />
     <ClInclude Include="Simulator.h" />
+    <ClInclude Include="Stats.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BTS.cpp" />
     <ClCompile Include="Main_Class.cpp" />
     <ClCompile Include="Network.cpp" />
+    <ClCompile Include="RNG.cpp" />
     <ClCompile Include="Simulator.cpp" />
+    <ClCompile Include="Stats.cpp" />
     <ClCompile Include="User.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

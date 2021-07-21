@@ -11,25 +11,6 @@ void BTS::Set_Reousrce_Block_Cap()
 {
 	
 }
-void BTS::Map_Reource_Block()
-{
-	
-}
-void BTS::Set_Data()
-{
-	
-	//for(int i = 0; i < Resource_Block_Count_;i++)
-	for (int i = 0; i < 15;i++)
-	{
-		//Resource_Block_Map_.push_back(rand() % 800 + 21);
-		Resource_Block_Map_.push_back((rand() % 10 + 1)*250);
-		std::cout << Resource_Block_Map_[i]<<" ";
-	}
-	std::cout << std::endl;
-	std::cout << std::endl;
-	std::cout << std::endl;
-	
-}
 
 void BTS::Set_Transmission_Succes_Flag(int Current_User_Handled_ID)
 {
@@ -39,57 +20,23 @@ void BTS::Set_Transmission_Succes_Flag(int Current_User_Handled_ID)
 
 
 }
-void BTS::Wipe_Resource_Blocks_To_Be_Sent()
+
+void BTS::Set_User_Pointer_To_Resource_Block(User* user, int Vector_i)
 {
-	int i = 0;
-	while(!Resource_Blocks_To_Be_Sent.empty())
-	{
-		Resource_Blocks_To_Be_Sent.pop_back();
-	}
-}
-void BTS::Wipe_Resource_Block_Map()
-{
-	
-	while (!Resource_Blocks_To_Be_Sent.empty())
-	{
-		Resource_Blocks_To_Be_Sent.pop_back();
-	}
+	Resource_Blocks_[Vector_i].user = user;
 }
 
-
-std::vector<int> BTS::Set_Resource_Block_To_User(int Packets_Per_User)// OBSELOTE
+void BTS::Set_Bit_Rate(int Bit_Rate, int Vector_i)
 {
-	Blocks_Depleted = false;
-	Wipe_Resource_Blocks_To_Be_Sent();
-	if(Resource_Block_Count_ >= Packets_Per_User)
-	{
-		for (int i = 0; i < Packets_Per_User;i++)
-		{
-			Resource_Blocks_To_Be_Sent.push_back(Resource_Block_Map_[Resource_Block_Count_-i]);
-			Resource_Block_Map_.pop_back();
-			Resource_Block_Count_--;
-			//std::cout<<Resource_Blocks_To_Be_Sent[i]<< " ";
-		}
-		
-		return Resource_Blocks_To_Be_Sent;
-	}
-	else if(Resource_Block_Count_ < Packets_Per_User && Resource_Block_Count_>= 0)
-	{
-		for (int i = Resource_Block_Count_; i >= 0;i--)
-		{
-				Resource_Blocks_To_Be_Sent.push_back(Resource_Block_Map_[i]);
-				Resource_Block_Map_.pop_back();
-				Resource_Block_Count_--;
-				//std::cout<<Resource_Blocks_To_Be_Sent[i]<< " ";
-
-
-		}
-		Resource_Block_Count_ = -1;
-		Blocks_Depleted = true;
-		return Resource_Blocks_To_Be_Sent;
-	}
-
+	Resource_Blocks_[Vector_i].Bit_Rate_ = Bit_Rate;
 }
+
+void BTS::Set_Error_Flag(bool Error_Flag, int Vector_i)
+{
+	Resource_Blocks_[Vector_i].Error_Flag_ = Error_Flag;
+}
+
+
 bool BTS::Get_Blocks_Depleted_Flag()
 {
 	return Blocks_Depleted;
@@ -98,11 +45,14 @@ bool BTS::Draw_Error()
 {
 	bool Error_Var = (rand() % 10 + 1) / 10;
 	if (!Error_Var)
-		std::cout << "Transmisja odby³a siê bez b³êdów" << std::endl;
+	{
+		//std::cout << "Transmisja odby³a siê bez b³êdów" << std::endl;
+		
+	}
 	else
 	{
-		std::cout << "Transmisja odby³a siê z b³êdem" << std::endl;
-		spdlog::error("Transimission Error");
+		//std::cout << "Transmisja odby³a siê z b³êdem" << std::endl;
+		spdlog::debug("Transimission Error");
 	}
 	return Error_Var;
 }
@@ -112,20 +62,43 @@ void BTS::Send_Data_To_User(int Bit_Rate)
 	
 }
 
-void BTS::Send_Block_To_User(int Resource_Block_Count, std::vector<int>User_Bit_Rate_Vector)
+void BTS::Send_Block_To_User(int Resource_Block_Count, std::vector<int>User_Bit_Rate_Vector,User* user)
 {
-	if(!((rand() % 10 + 1) / 10))
-		Resource_Block_Map_.push_back(User_Bit_Rate_Vector.front());
-	else
-		spdlog::error("Transimission Error");
-	Wipe_Resource_Block_Map();
-	User_Bit_Rate_Vector.pop_back();
+
+
+	
+	//if (!((rand() % 10 + 1) / 10))
+	//{
+	//	Transmission_Succes_Flag_.push_back(true);
+	//	user->Set_User_Data(1);
+	//}
+	//	
+	//else
+	//{
+	//	Transmission_Succes_Flag_.push_back(false);
+	//	user->Set_User_Data(0);
+	//	spdlog::debug("Transimission Error");
+	//}
+	//	
+	//	
+	//Wipe_Resource_Block_Map();
+	////User_Bit_Rate_Vector.pop_back();
+}
+
+void BTS::init()
+{
+
+	for (int i = 0; i < Get_Resource_Block_Count(); i++)
+	{
+		Resource_Block_ Resource_Block;
+		Resource_Blocks_.push_back(Resource_Block);
+	}
 }
 
 
 BTS::BTS(int Resource_Block_Count)
 {
-	Resource_Block_Map_.reserve(Resource_Block_Count);
+	//Resource_Blocks_.reserve(Resource_Block_Count);
 	Resource_Block_Count_ = Resource_Block_Count;
-	--Resource_Block_Count_;
+	//--Resource_Block_Count_;
 }
